@@ -3,9 +3,9 @@ import app from "@/server";
 import { startAnnouncementScheduler } from "@/jobs/announcementScheduler";
 
 
-const server = app.listen(config.port, "localhost", () => {
+const server = app.listen(config.port, "0.0.0.0", () => {
 	const { nodeEnv, port } = config;
-	console.log(`Server (${nodeEnv}) running on port http://localhost:${port}`);
+	console.log(`Server (${nodeEnv}) running on port http://0.0.0.0:${port}`);
 	
 	// Start scheduled jobs
 	startAnnouncementScheduler();

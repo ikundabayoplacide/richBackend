@@ -4,11 +4,16 @@ import { RegisterRoutes } from "./generated/routes";
 import errorHandlerMiddleware from "./middlewares/errorHandler";
 import dotenv from "dotenv";
 import { initializeDatabase } from "./config/database";
+import path from "path";
+import fs from "fs";
 
 // Ensure all models are loaded and associations are registered
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import { surveyFileUpload } from "./middlewares/multer";
+import db from "./models";
+import { uploadToCloudinary } from "./utils/cloudinary";
 
 dotenv.config();
 
@@ -99,6 +104,55 @@ app.get("/", (req: Request, res: Response) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Serve uploaded files statically
+const assetsDir = path.join(process.cwd(), "assets");
+if (!fs.existsSync(assetsDir)) fs.mkdirSync(assetsDir, { recursive: true });
+app.use("/assets", express.static(assetsDir));
+
+// POST /api/uploads — multipart file upload for survey file_upload questions
+app.post(
+  "/api/uploads",
+  surveyFileUpload.single("file"),
+  async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        res.status(400).json({ status: 400, message: "No file provided", result: null });
+        return;
+      }
+
+      const { answerId } = req.body as { answerId?: string };
+
+      const { url, publicId, deleteToken } = await uploadToCloudinary(
+        req.file.path,
+        req.file.originalname,
+        req.file.mimetype
+      );
+
+      const doc = await db.Document.create({
+        documentName: req.file.originalname,
+        size: req.file.size,
+        type: req.file.mimetype,
+        addedAt: new Date(),
+        documentUrl: url,
+        answerId: answerId ?? null,
+        userId: (req as any).user?.id ?? null,
+        publicId,
+        deleteToken,
+        projectId: null,
+        interventionAreaId: null,
+      });
+
+      res.status(201).json({
+        status: 201,
+        message: "File uploaded successfully",
+        result: { url, key: publicId, documentId: doc.id },
+      });
+    } catch (err: any) {
+      res.status(500).json({ status: 500, message: err.message ?? "Upload failed", result: null });
+    }
+  }
+);
 
 // Register TSOA-generated routes
 RegisterRoutes(app);

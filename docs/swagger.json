@@ -1251,7 +1251,8 @@
 						"type": "string"
 					},
 					"projectId": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"surveyType": {
 						"type": "string",
@@ -3493,7 +3494,8 @@
 						"type": "string"
 					},
 					"projectId": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"surveyType": {
 						"type": "string",
@@ -5662,6 +5664,34 @@
 											"type": "object"
 										},
 										"type": "array"
+									},
+									"responderHealthCenter": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderVillage": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderCell": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderSector": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderDistrict": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderName": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderNId": {
+										"type": "string",
+										"nullable": true
 									},
 									"responderLocation": {
 										"type": "string",
@@ -10704,6 +10734,34 @@
 											"type": "object"
 										},
 										"type": "array"
+									},
+									"responderHealthCenter": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderVillage": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderCell": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderSector": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderDistrict": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderName": {
+										"type": "string",
+										"nullable": true
+									},
+									"responderNId": {
+										"type": "string",
+										"nullable": true
 									},
 									"userId": {
 										"type": "string",

@@ -85,6 +85,7 @@ interface SurveyCreateRequest {
 
 interface SurveyUpdateRequest extends Partial<SurveyCreateRequest> {
   status?: "draft" | "active" | "paused" | "archived";
+  projectId?: string | null;
 }
 
 @Route('api/surveys')
@@ -1012,9 +1013,9 @@ export class SurveyController extends Controller {
     if (!survey) return ServiceResponse.failure('Survey not found', null, 404);
 
     await sequelize.transaction(async (t) => {
-      if (data.startAt || data.endAt) {
-        const start = data.startAt ? new Date(data.startAt) : survey.startAt;
-        const end = data.endAt ? new Date(data.endAt) : survey.endAt;
+      if (data.startAt && data.endAt) {
+        const start = new Date(data.startAt);
+        const end = new Date(data.endAt);
         if (isNaN(start.getTime()) || isNaN(end.getTime()) || end <= start) {
           throw new Error('Invalid startAt/endAt values');
         }
@@ -1185,6 +1186,13 @@ export class SurveyController extends Controller {
     body: {
       userId?: string | null;
       responderLocation?: string | null;
+      responderNId?: string | null;
+      responderName?: string | null;
+      responderDistrict?: string | null;
+      responderSector?: string | null;
+      responderCell?: string | null;
+      responderVillage?: string | null;
+      responderHealthCenter?: string | null;
       answers: Array<{
         questionId: string;
         answerText?: string | null;
@@ -1257,10 +1265,17 @@ export class SurveyController extends Controller {
     await sequelize.transaction(async (t) => {
       createdResponse = await db.Response.create({
         surveyId: survey.id,
-        userReportCounter: userReportCounter,
         userId: effectiveUserId,
-        responderLocation: body.responderLocation, // Save coordinates
-        locationName: locationName, // Save readable location name (or null if geocoding failed)
+        responderNId: body.responderNId ?? null,
+        responderName: body.responderName ?? null,
+        responderDistrict: body.responderDistrict ?? null,
+        responderSector: body.responderSector ?? null,
+        responderCell: body.responderCell ?? null,
+        responderVillage: body.responderVillage ?? null,
+        responderHealthCenter: body.responderHealthCenter ?? null,
+        userReportCounter: userReportCounter,
+        responderLocation: body.responderLocation,
+        locationName: locationName,
       }, { transaction: t });
 
       for (const a of body.answers || []) {

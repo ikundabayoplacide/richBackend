@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 });
 
 // File filter for images only
-const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const imageFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
@@ -26,13 +26,19 @@ const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCa
   }
 };
 
-// Configure multer
+// Configure multer for profile images
 const upload = multer({
   storage,
-  fileFilter,
+  fileFilter: imageFilter,
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
   },
+});
+
+// Survey file upload — accepts any file type, up to 20MB
+export const surveyFileUpload = multer({
+  storage,
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 // ✅ Add explicit type annotations

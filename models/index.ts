@@ -419,6 +419,18 @@ User.hasMany(Answer, {
   onDelete: 'CASCADE',
 });
 
+// Answer -> Document (uploaded files for file_upload questions)
+Answer.hasMany(Document, {
+  as: 'uploadedFiles',
+  foreignKey: 'answerId',
+  onDelete: 'CASCADE',
+  hooks: true,
+});
+Document.belongsTo(Answer, {
+  as: 'answer',
+  foreignKey: 'answerId',
+});
+
 //ANNOUNCEMENT ASSOCIATIONS
 Announcement.belongsToMany(Role, {
   through: 'announcement_roles',

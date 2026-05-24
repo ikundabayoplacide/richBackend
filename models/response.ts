@@ -5,6 +5,13 @@ export interface ResponseAttributes {
   id: string;
   surveyId: string;
   userId?: string | null; // nullable for anonymous
+  responderNId?: string | null;
+  responderName?: string | null;
+  responderDistrict?: string | null;
+  responderSector?: string | null;
+  responderCell?: string | null;
+  responderVillage?: string | null;
+  responderHealthCenter?: string | null;
   userReportCounter?: number;
   responderLocation?: string | null; // GPS coordinates
   locationName?: string | null; // Human-readable location name
@@ -21,6 +28,13 @@ class Response extends Model<ResponseAttributes, ResponseCreationAttributes> imp
   declare id: string;
   declare surveyId: string;
   declare userId?: string | null;
+  declare responderNId?: string | null;
+  declare responderName?: string | null;
+  declare responderDistrict?: string | null;
+  declare responderSector?: string | null;
+  declare responderCell?: string | null;
+  declare responderVillage?: string | null;
+  declare responderHealthCenter?: string | null;
   declare userReportCounter?: number;
   declare responderLocation?: string | null;
   declare locationName?: string | null;
@@ -44,6 +58,34 @@ Response.init(
       type: DataTypes.UUID,
       allowNull: true,
       defaultValue: null,
+    },
+    responderNId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderDistrict: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderSector: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderCell: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderVillage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    responderHealthCenter: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     userReportCounter: {
       type: DataTypes.INTEGER,

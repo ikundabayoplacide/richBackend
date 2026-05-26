@@ -1,12 +1,12 @@
 import config from "@/config/config";
 import app from "@/server";
 import { startAnnouncementScheduler } from "@/jobs/announcementScheduler";
+const PORT = Number(process.env.PORT) || config.port;
 
 
-const server = app.listen(config.port, "0.0.0.0", () => {
-	const { nodeEnv, port } = config;
-	console.log(`Server (${nodeEnv}) running on port http://0.0.0.0:${port}`);
-	
+
+const server = app.listen(PORT, "0.0.0.0", () => {
+	console.log(`Server running on port ${PORT}`);
 	// Start scheduled jobs
 	startAnnouncementScheduler();
 });

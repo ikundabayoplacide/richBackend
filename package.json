@@ -35,6 +35,9 @@
     "sequelize": "^6.37.7",
     "swagger-ui-express": "^5.0.1",
     "tsoa": "^6.6.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -52,10 +55,7 @@
     "@types/swagger-ui-express": "^4.1.8",
     "@types/uuid": "^10.0.0",
     "cross-env": "^10.0.0",
-    "sequelize-cli": "^6.6.3",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "sequelize-cli": "^6.6.3"
   },
   "tsup": {
     "entry": [

@@ -1,7 +1,7 @@
 {
   "name": "community-backend",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "dist/index.mjs",
   "scripts": {
     "build": "npx tsoa routes && npx tsoa spec && tsc && tsup",
     "seed": "tsx ./scripts/seedMockData.ts",
@@ -72,6 +72,9 @@
     "clean": true,
     "dts": true,
     "splitting": false,
-    "skipNodeModulesBundle": true
+    "skipNodeModulesBundle": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }

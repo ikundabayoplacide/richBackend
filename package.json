@@ -1,7 +1,7 @@
 {
   "name": "community-backend",
   "version": "1.0.0",
-  "main": "dist/index.mjs",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx tsoa routes && npx tsoa spec && tsc && tsup",
     "seed": "tsx ./scripts/seedMockData.ts",

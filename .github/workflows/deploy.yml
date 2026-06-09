@@ -1,9 +1,9 @@
-name: Deploy to cPanel
+name: Deploy to Vercel
 
 on:
   push:
     branches:
-      - main  # or master, whatever your branch is
+      - main
 
 jobs:
   deploy:
@@ -24,17 +24,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy via SSH to cPanel
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
-          script: |
-            cd ~/myrichubuzima
-            git pull origin main
-            npm install --production
-            npm run build
-            # Restart the app in cPanel Passenger
-            touch tmp/restart.txt
+      - name: Deploy to Vercel
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes

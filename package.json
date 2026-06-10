@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx tsoa routes && npx tsoa spec && tsup",
+    "build": "npx tsoa routes && npx tsoa spec && tsup --no-dts",
     "seed": "tsx ./scripts/seedMockData.ts",
     "start": "node dist/index.mjs",
     "dev": "npx tsoa routes && npx tsoa spec && tsx watch index.ts",
@@ -70,7 +70,7 @@
     "target": "es2020",
     "sourcemap": true,
     "clean": true,
-    "dts": true,
+    "dts": false,
     "splitting": false,
     "skipNodeModulesBundle": true,
     "paths": {

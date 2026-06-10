@@ -1,13 +1,12 @@
 import config from "@/config/config";
 import app from "@/server";
 import { startAnnouncementScheduler } from "@/jobs/announcementScheduler";
+import { initializeDatabase } from "@/config/database";
 const PORT = Number(process.env.PORT) || config.port;
 
-
-
-const server = app.listen(PORT, "0.0.0.0", () => {
+const server = app.listen(PORT, "0.0.0.0", async () => {
 	console.log(`Server running on port ${PORT}`);
-	// Start scheduled jobs
+	await initializeDatabase();
 	startAnnouncementScheduler();
 });
 

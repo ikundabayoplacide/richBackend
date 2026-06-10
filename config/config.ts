@@ -18,9 +18,9 @@ const config: Config = {
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     databaseName: process.env.DB_NAME || "community_tool",
-    dialect: process.env.DATABASE_URL ? "postgres" : "mysql",
+    dialect: "postgres",
     logging: false,
-    dialectOptions: process.env.DATABASE_URL ? { ssl: { require: true, rejectUnauthorized: false } } : {},
+    dialectOptions: { ssl: { require: true, rejectUnauthorized: false } },
   },
 
   bcryptSaltRounds: 10, // Number of salt rounds for bcrypt hashing

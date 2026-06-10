@@ -23,14 +23,6 @@ const app = express();
 let databaseConnected = false;
 let databaseError: any = null;
 
-// Initialize database connection
-initializeDatabase().then((result) => {
-  databaseConnected = result.success;
-  if (!result.success) {
-    databaseError = result.error;
-  }
-});
-
 const allowedOrigins = [
   "http://localhost:3000",
   "capacitor://localhost",

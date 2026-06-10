@@ -11,7 +11,11 @@ const sequelizeOptions: any = {
 };
 
 const sequelize = process.env.DATABASE_URL
-  ? new Sequelize(process.env.DATABASE_URL, sequelizeOptions)
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: "postgres",
+      logging: false,
+      dialectOptions: { ssl: { require: true, rejectUnauthorized: false } },
+    })
   : new Sequelize(config.database.databaseName, config.database.user, config.database.password, {
       ...sequelizeOptions,
       host: config.database.host,
